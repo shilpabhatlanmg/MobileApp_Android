@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+ <LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical"
+     android:animateLayoutChanges="true"
+
+     >
+
+<LinearLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/text_input_background"
+    android:layout_margin="5dp"
+    android:elevation="2dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
+    >
+<TextView
+    android:id="@+id/text_input_hint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/enter_mobile"
+    android:textSize="14sp"
+    android:textColor="@color/colorTxtGray"
+    android:maxLines="1"
+    />
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="horizontal"
+     >
+ <EditText
+     android:id="@+id/text_input_et"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:paddingTop="8dp"
+     android:paddingBottom="8dp"
+     android:maxLines="1"
+     android:textSize="18sp"
+     android:textColor="@color/colorTxtBlack"
+     android:background="@null"
+     android:layout_weight="1"
+     />
+     <ImageButton
+         android:id="@+id/toggle_password_visibility_btn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="?actionBarItemBackground"
+         android:src="@drawable/ic_password_eye_selector"
+         android:padding="5dp"
+         android:layout_gravity="right"
+         android:visibility="gone"
+         />
+ </LinearLayout>
+</LinearLayout>
+  <TextView
+      android:id="@+id/error_tv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      android:text="Mobile number is not valid"
+      android:paddingLeft="5dp"
+      android:textSize="14sp"
+      android:textColor="@color/colorErrorRed"
+      android:imeOptions="actionNext"
+      />
+ </LinearLayout>
+</layout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhiteSmoke"
+    tools:context="com.protectapp.activity.ChatActivity">
+    <com.protectapp.customview.DefaultToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="5dp" />
+    <LinearLayout
+        android:id="@+id/send_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:elevation="5dp"
+        >
+        <EditText
+            android:id="@+id/chat_msg_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:padding="12dp"
+            />
+        <ImageView
+            android:id="@+id/send_chat_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/send_chat_btn_bg"
+            android:foreground="?actionBarItemBackground"
+            android:src="@drawable/ic_send_chat"
+            />
+    </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:layout_below="@id/toolbar"
+    android:layout_above="@id/send_msg_layout">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        />
+</FrameLayout>
+</RelativeLayout>
+</layout>

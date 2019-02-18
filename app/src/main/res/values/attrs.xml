@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <declare-styleable name="TextInput">
+        <attr name="fontName" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="editable" format="boolean" />
+        <attr name="inputBackground" format="integer" />
+        <attr name="inputHintColor" format="integer" />
+        <attr name="inputColor" format="integer" />
+        <attr name="inputType" format="enum" >
+        <enum name="phone" value="0x00000003"/>
+        <enum name="password" value="0x00000080"/>
+        <enum name="number" value="0x00000002"/>
+        <enum name="email" value="0x00000020"/>
+        <enum name="textCapWords" value="0x00002000"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3f8a19</color>
+    <color name="colorPrimaryDark">#3f8a19</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorWhiteSmoke">#ededed</color>
+    <color name="colorBGLightGray">#e7e7e7</color>
+    <color name="colorGreen">#3f8a19</color>
+    <color name="colorGreenT65">#A63f8a19</color>
+    <color name="colorGreenT80">#CC3f8a19</color>
+    <color name="colorWhiteT80">#CCFFFFFF</color>
+    <color name="colorTxtHighlight">#A63f8a19</color>
+    <color name="colorErrorRed">#da4539</color>
+    <color name="colorYellow">#fec841</color>
+    <color name="colorBlue">#0f75bc</color>
+    <color name="colorRipple">#A6000000</color>
+    <color name="colorTxtBlack">#515151</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorTxtLGray">#bdbdbd</color>
+    <color name="colorTxtLLGray">#dedede</color>
+    <color name="colorGrayHint">#ababab</color>
+    <color name="colorTxtGray">#717171</color>
+    <color name="colorTxtBlue">#316ede</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorInputGray">#e8e8e8</color>
+    <color name="colorDimBlack">#40000000</color>
+    <color name="colorBlackTint">#A6000000</color>
+    <color name="colorProgressBar">#3f8a19</color>
+
+</resources>

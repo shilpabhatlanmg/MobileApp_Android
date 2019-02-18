@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhiteSmoke">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="55dp"
+            android:paddingBottom="35dp"
+            tools:context="com.protectapp.activity.LoginActivity">
+
+            <ImageView
+                android:id="@+id/app_logo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+
+            <com.protectapp.customview.TextInputView
+                android:id="@+id/phone_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                app:hint="@string/enter_mobile"
+                app:inputType="phone"
+                android:nextFocusDown="@id/password_input"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/app_logo_iv"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9" />
+            <com.protectapp.customview.TextInputView
+                android:id="@+id/password_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hint="@string/enter_password_or_otp"
+                app:inputType="password"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phone_input"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9" />
+        <TextView
+                android:id="@+id/forgot_password_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_password"
+                android:textColor="@color/colorGreen"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password_input"
+                app:layout_constraintVertical_bias="0"
+                android:layout_marginTop="20dp" />
+
+            <com.protectapp.customview.NMGButton
+                android:id="@+id/login_button"
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:background="@drawable/default_button_bg"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/forgot_password_tv"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
+                android:layout_marginTop="20dp"
+
+                />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>

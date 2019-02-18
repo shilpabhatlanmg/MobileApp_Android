@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/attendee_image_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/dummy_user_pic"
+        app:civ_border_color="@color/colorWhite"
+        app:civ_border_width="1dp"
+
+        />
+    <TextView
+        android:id="@+id/attendee_name_tv"
+        android:layout_alignTop="@id/attendee_image_iv"
+        android:layout_alignBottom="@id/attendee_image_iv"
+        android:layout_toRightOf="@id/attendee_image_iv"
+        android:paddingLeft="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorTxtBlack"
+        android:textStyle="bold"
+        android:text="Karan Kalsi"
+        android:gravity="center_vertical"
+        />
+</RelativeLayout>
+</layout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhiteSmoke"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/incident_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fire_dash"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/incident_location_tv"
+        app:layout_constraintVertical_chainStyle="packed"
+
+        />
+    <TextView
+        android:id="@+id/incident_location_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.6"
+        android:gravity="center"
+        android:text="DLF Mall of America, Second Floor"
+        android:textSize="22sp"
+        android:textColor="@color/colorTxtBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/incident_image"
+        app:layout_constraintBottom_toTopOf="@id/incident_time_tv"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/incident_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2:45 pm"
+        android:textSize="12sp"
+        android:textColor="@color/colorTxtLGray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/incident_location_tv"
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        android:layout_marginTop="25dp"
+        />
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/incident_time_tv"
+        app:layout_constraintBottom_toTopOf="@id/reported_by_header"
+        android:background="@color/colorTxtLLGray"
+        android:layout_marginTop="25dp"
+        />
+    <TextView
+        android:id="@+id/reported_by_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Reported by"
+        android:textSize="12sp"
+        android:textColor="@color/colorTxtLGray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        app:layout_constraintBottom_toTopOf="@id/reported_by_image"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/reported_by_image"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_user_img_placeholder"
+        app:civ_border_color="@color/colorWhite"
+        app:civ_border_width="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reported_by_header"
+        app:layout_constraintBottom_toTopOf="@id/reported_by_name"
+        />
+    <TextView
+        android:id="@+id/reported_by_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Florieke Krebber"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorTxtBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reported_by_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <ImageView
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        android:background="?actionBarItemBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp"
+        />
+</android.support.constraint.ConstraintLayout>
+</layout>

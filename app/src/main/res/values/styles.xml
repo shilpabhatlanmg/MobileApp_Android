@@ -1,0 +1,56 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+
+    </style>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+
+    </style>
+    <style name="Theme.White.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+    <style name="ProgressBarStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/colorProgressBar</item>
+    </style>
+
+    <style name="MyBottomSheetStyle" parent="@style/BottomSheet">
+        <item name="bottom_sheet_bg_color">@color/colorWhite</item>
+        <item name="bottom_sheet_title_text_appearance">@style/TitleAppearance</item>
+        <item name="bottom_sheet_list_text_appearance">@style/ListAppearance</item>
+        <item name="bottom_sheet_grid_text_appearance">@style/GridAppearance</item>
+    </style>
+    <style name="TitleAppearance" parent="BottomSheet.Title.TextAppearance">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="ListAppearance" parent="BottomSheet.ListItem.TextAppearance">
+        <item name="android:textColor">@color/colorTxtGray</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="GridAppearance" parent="BottomSheet.GridItem.TextAppearance">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorTxtGray</item>
+
+
+    </style>
+</resources>

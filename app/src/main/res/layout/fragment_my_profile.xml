@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhiteSmoke"
+        android:clickable="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="@dimen/toolbar_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="45dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_image_iv"
+                    android:layout_width="@dimen/my_profile_user_img_size"
+                    android:layout_height="@dimen/my_profile_user_img_size"
+                    android:src="@drawable/ic_user_img_placeholder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.05" />
+
+                <ImageButton
+                    android:id="@+id/img_picker_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/camera_button_bg"
+                    android:elevation="5dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintBottom_toBottomOf="@id/user_image_iv"
+                    app:layout_constraintHorizontal_bias="1.15"
+                    app:layout_constraintLeft_toLeftOf="@id/user_image_iv"
+                    app:layout_constraintRight_toRightOf="@id/user_image_iv"
+                    app:layout_constraintTop_toTopOf="@id/user_image_iv"
+                    app:layout_constraintVertical_bias="1"
+
+                    />
+
+                <LinearLayout
+                    android:id="@+id/input_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_image_iv"
+                    app:layout_constraintWidth_percent="0.9">
+
+                    <com.protectapp.customview.TextInputView
+                        android:id="@+id/name_input_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hint="@string/name"
+                        app:inputBackground="@drawable/text_input_gray_background"
+                        app:inputHintColor="@color/colorGrayHint"
+                        app:inputType="textCapWords" />
+
+                    <com.protectapp.customview.TextInputView
+                        android:id="@+id/mobile_input_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:editable="false"
+                        app:hint="@string/mobile"
+                        app:inputBackground="@drawable/text_input_gray_background"
+                        app:inputColor="@color/colorGrayHint"
+                        app:inputHintColor="@color/colorGrayHint" />
+
+                    <com.protectapp.customview.TextInputView
+                        android:id="@+id/email_input_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:editable="false"
+                        app:hint="@string/email"
+                        app:inputBackground="@drawable/text_input_gray_background"
+                        app:inputColor="@color/colorGrayHint"
+                        app:inputHintColor="@color/colorGrayHint"
+                        app:inputType="email" />
+
+                </LinearLayout>
+
+
+                <com.protectapp.customview.NMGButton
+                    android:id="@+id/save_button"
+                    android:layout_width="0dp"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/default_button_bg"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_lay"
+                    app:layout_constraintWidth_percent="0.9"
+
+                    />
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </android.support.constraint.ConstraintLayout>
+</layout>

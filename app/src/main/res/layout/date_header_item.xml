@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    >
+
+    <TextView
+        android:id="@+id/date_header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nov 26, 2018"
+        android:textColor="@color/colorTxtBlack"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="2dp"
+        android:background="@color/colorTxtGray"
+
+    />
+</LinearLayout>
+</layout>

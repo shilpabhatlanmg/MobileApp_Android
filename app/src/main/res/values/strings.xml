@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">ProtectApp™</string>
+    <string name="app_flavor">main</string>
+    <string name="enter_the_otp_sent_to">Enter the OTP sent to %s</string>
+    <string name="you_will_get_otp_in">You will get OTP in</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="do_not_receive_code">Don\'t receive code?</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify_and_proceed"><![CDATA[Verify & Proceed]]></string>
+    <string name="current_location">Current Location</string>
+    <string name="enter_mobile">Enter your mobile number</string>
+    <string name="enter_password_or_otp">Password or OTP</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile No.</string>
+    <string name="email">Email Address</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="new_here">New here?</string>
+    <string name="click_here">click here</string>
+    <string name="password_help">Password should be 8 to 20 characters\nand include at least one number</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="create_password">Create Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="error_mobile_input">Enter valid mobile number</string>
+    <string name="error_password_input">Enter password</string>
+    <string name="error_old_password_input">Enter old password</string>
+    <string name="error_new_password_input">Enter new password</string>
+    <string name="error_confirm_password_input">Confirm password</string>
+    <string name="error_name_input">Enter name</string>
+    <string name="error_password_length">Password must be %d characters long</string>
+    <string name="error_password_mismatch">Password mismatch</string>
+    <string name="error_new_old_password_same">New password can not be same as old password</string>
+    <string name="chat">Chat</string>
+    <string name="home">Home</string>
+    <string name="aid_history">Aid History</string>
+    <string name="my_profile">My Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="about_protect_app">About ProtectApp™</string>
+    <string name="logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="previous">Previous</string>
+    <string name="medical">Medical</string>
+    <string name="fire">Fire</string>
+    <string name="police">Police</string>
+    <string name="assist">Assist</string>
+    <string name="less">Less</string>
+    <string name="save">Save</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+
+
+    <string name="no_beacon_title">No Location!</string>
+    <string name="no_beacon_message">We couldn\'t pin point your location within this facility. Please make sure that bluetooth is on.</string>
+    <string name="beacon_status_searching">Searching</string>
+    <string name="beacon_status_updating">Updating</string>
+    <string name="reported_success_title">Report Submitted</string>
+    <string name="reported_success_msg">We have received your report, Someone from security team will arrive at NSP of NMG Location of 2nd floor soon</string>
+    <string name="default_error_title">Error!</string>
+    <string name="default_error_msg">Something went wrong. Please try again.</string>
+
+    <string name="confirm_report_title">Please Confirm</string>
+    <string name="confirm_report_message_fire">that you want to report a fire</string>
+    <string name="confirm_report_message_assist">that you need assistance</string>
+    <string name="confirm_report_message_medical">that you want to report a medical emergency</string>
+    <string name="confirm_report_message_police">that you need police assistance</string>
+    <string name="confirm_report_at_your_location">at your location?</string>
+    <string name="confirm_report_are_you_sure">Are you sure</string>
+    <string name="select_member">Select Member</string>
+    <string name="profile_updated_success_msg">Profile has been updated successfully</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="old_password">Old Password</string>
+    <string name="password_changed_success">Password changed successfully</string>
+    <string name="record_response_incident_msg">Do you want to record your response to this incident report?</string>
+    <string name="response_recorded_success_msg">Your response has been recorded successfully</string>
+</resources>
