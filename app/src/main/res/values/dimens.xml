@@ -13,5 +13,5 @@
     <dimen name="default_chat_item_margin">3dp</dimen>
     <dimen name="new_chat_item_margin">16dp</dimen>
     <dimen name="chat_unread_badge_size">20dp</dimen>
-    <dimen name="dashboard_alarm_btn_size">150dp</dimen>
+    <dimen name="dashboard_alarm_button_container_size">300dp</dimen>
 </resources>

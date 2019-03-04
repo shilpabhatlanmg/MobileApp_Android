@@ -195,13 +195,13 @@ public class ProtectApiHelper {
 
         }
     }
-    public void updateUserProfile(String token,String name,String profileImage, Callback<GenericResponseModel<ProfileData>> responseCallback)
+    public void updateUserProfile(String token,String name,String email,String profileImage, Callback<GenericResponseModel<ProfileData>> responseCallback)
     {
 
         if(protectApi!=null)
         {
             Call<GenericResponseModel<ProfileData>> call =  protectApi.updateUserProfile(token,
-                    getRequestBody(ProtectApiRequestBuilder.getUpdateUserProfileRequest(name,profileImage)));
+                    getRequestBody(ProtectApiRequestBuilder.getUpdateUserProfileRequest(name,email,profileImage)));
             call.enqueue(responseCallback);
 
         }

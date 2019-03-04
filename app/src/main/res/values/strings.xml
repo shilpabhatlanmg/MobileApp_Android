@@ -28,6 +28,7 @@
     <string name="error_new_password_input">Enter new password</string>
     <string name="error_confirm_password_input">Confirm password</string>
     <string name="error_name_input">Enter name</string>
+    <string name="error_email_input">Enter email</string>
     <string name="error_password_length">Password must be %d characters long</string>
     <string name="error_password_mismatch">Password mismatch</string>
     <string name="error_new_old_password_same">New password can not be same as old password</string>
@@ -60,7 +61,7 @@
     <string name="beacon_status_searching">Searching</string>
     <string name="beacon_status_updating">Updating</string>
     <string name="reported_success_title">Report Submitted</string>
-    <string name="reported_success_msg">We have received your report, Someone from security team will arrive at NSP of NMG Location of 2nd floor soon</string>
+    <string name="reported_success_msg">We have received your report, Someone from security team will arrive at %s of %s soon</string>
     <string name="default_error_title">Error!</string>
     <string name="default_error_msg">Something went wrong. Please try again.</string>
 

@@ -3,12 +3,13 @@ package com.protectapp.util;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.support.v4.content.pm.PackageInfoCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -148,9 +149,10 @@ public class AppCommons {
         try {
             String prevDate = "";
             if (lastIncident != null)
-                prevDate = lastIncident.getTimestamp().split(" ")[0];
+                prevDate = toLocalWebDate(lastIncident.getTimestamp()).split(" ")[0];
             for (Incident incident : incidentList) {
-                String[] timestamp = incident.getTimestamp().split(" ");
+
+                String[] timestamp = toLocalWebDate(incident.getTimestamp()).split(" ");
                 String date = timestamp[0];
                 String time = timestamp[1];
                 incident.setDisplayableDate(toDisplayableDate(date));
@@ -183,7 +185,7 @@ public class AppCommons {
         List<Incident> processedList = new ArrayList<>();
         try {
                 for (Incident incident : incidentList) {
-                    String[] timestamp = incident.getTimestamp().split(" ");
+                    String[] timestamp = toLocalWebDate(incident.getTimestamp()).split(" ");
                     String date = timestamp[0];
                     String time = timestamp[1];
                     incident.setDisplayableDate(toDisplayableDate(date));
@@ -201,12 +203,12 @@ public class AppCommons {
 
     }
 
-    public static final String toDisplayableDate(String webDate) {
+    public static final String toDisplayableDate(String localWebDate) {
         String displayableDate = "";
         try {
             SimpleDateFormat webFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             SimpleDateFormat appFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
-            Date date = webFormat.parse(webDate);
+            Date date = webFormat.parse(localWebDate);
             displayableDate = appFormat.format(date);
         } catch (Exception e) {
 
@@ -216,12 +218,12 @@ public class AppCommons {
 
     }
 
-      public static final String toDisplayableTime(String webTime) {
+      public static final String toDisplayableTime(String localWebTime) {
         String displayableTime = "";
         try {
             SimpleDateFormat webFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
             SimpleDateFormat appFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
-            Date date = webFormat.parse(webTime);
+            Date date = webFormat.parse(localWebTime);
             displayableTime = appFormat.format(date).toLowerCase();
         } catch (Exception e) {
 
@@ -230,17 +232,41 @@ public class AppCommons {
         }
 
     }
-    public static final String getDisplayableTime(String webData)
+    public static final String toDisplayableDateTime(String utcWebDate)
     {
 
-        String displayableTime = "";
+        String displayableDateTime = "";
         try {
-            displayableTime=getDisplayableTime(webData.split(" ")[1]);
+            SimpleDateFormat webFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'Z'", Locale.US);
+            webFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            SimpleDateFormat appFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
+            appFormat.setTimeZone(TimeZone.getDefault());
+            Date date = webFormat.parse(utcWebDate);
+            displayableDateTime = appFormat.format(date);
         } catch (Exception e) {
 
         } finally {
-            return displayableTime;
+            return displayableDateTime;
         }
+
+    }
+    public static final String toLocalWebDate(String webDate)
+    {
+
+        String localWebDate = "";
+        try {
+            SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'Z'", Locale.US);
+            utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            SimpleDateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+            localFormat.setTimeZone(TimeZone.getDefault());
+            Date utcDate = utcFormat.parse(webDate);
+            localWebDate = localFormat.format(utcDate);
+        } catch (Exception e) {
+
+        } finally {
+            return localWebDate;
+        }
+
     }
     public static final String extractContactNumber(String number) {
         return number.replace(Constants.COUNTRY_CODE + " ", "");
@@ -458,5 +484,18 @@ public static final String generateConfirmReportMsg(Context context,int incident
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:"+mobile));
         context.startActivity(intent);
+    }
+
+    public static String getVersionName(Context context)
+    {
+
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+           return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "Unknown-01";
+        }
     }
 }

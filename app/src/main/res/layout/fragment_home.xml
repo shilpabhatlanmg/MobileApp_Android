@@ -51,42 +51,49 @@
             app:layout_constraintVertical_bias="0" />
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dashboard_alarm_button_container_size"
+            android:layout_height="@dimen/dashboard_alarm_button_container_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/current_location_tv"
-            app:layout_constraintWidth_percent="0.8">
+
+
+            >
 
             <ImageView
                 android:id="@+id/police_alarm_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintHeight_percent="0.45"
                 android:src="@drawable/ic_police_dash"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/medical_alarm_btn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/fire_alarm_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0"
-
                 />
 
             <ImageView
                 android:id="@+id/fire_alarm_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintHeight_percent="0.45"
                 android:src="@drawable/ic_fire_dash"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/assist_alarm_btn"
                 app:layout_constraintLeft_toRightOf="@id/police_alarm_btn"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+                app:layout_constraintVertical_bias="0"/>
 
             <ImageView
                 android:id="@+id/medical_alarm_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintHeight_percent="0.45"
                 android:src="@drawable/ic_med_dash"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -97,8 +104,10 @@
 
             <ImageView
                 android:id="@+id/assist_alarm_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintHeight_percent="0.45"
                 android:src="@drawable/ic_assist_dash"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/police_alarm_btn"
@@ -106,5 +115,18 @@
                 app:layout_constraintTop_toBottomOf="@id/fire_alarm_btn"
                 app:layout_constraintVertical_bias="0.1"/>
         </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/app_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App version"
+            android:textColor="@color/colorErrorRed"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="15dp"
+            />
     </android.support.constraint.ConstraintLayout>
 </layout>

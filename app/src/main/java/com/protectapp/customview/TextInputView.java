@@ -32,7 +32,8 @@ public class TextInputView extends FrameLayout implements TextView.OnEditorActio
     private String countryCode = "";
     private AppTextInputBinding binding;
     private boolean showingError = false;
-
+    private int hintColor;
+    private int txtColor;
     public TextInputView(Context context) {
         super(context);
         init(null);
@@ -55,8 +56,8 @@ public class TextInputView extends FrameLayout implements TextView.OnEditorActio
         String hint = null;
         Drawable background = null;
         boolean editable=true;
-        int hintColor = ContextCompat.getColor(getContext(), R.color.colorTxtGray);
-        int txtColor = ContextCompat.getColor(getContext(),R.color.colorTxtBlack);
+         hintColor = ContextCompat.getColor(getContext(), R.color.colorTxtGray);
+         txtColor = ContextCompat.getColor(getContext(),R.color.colorTxtBlack);
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextInput);
             inputType = a.getInt(R.styleable.TextInput_inputType, InputType.TYPE_CLASS_TEXT);
@@ -82,9 +83,14 @@ public class TextInputView extends FrameLayout implements TextView.OnEditorActio
         if (inputType == InputType.TYPE_CLASS_PHONE) {
             binding.textInputEt.setText(countryCode);
             Selection.setSelection(binding.textInputEt.getText(), binding.textInputEt.getText().length());
-            binding.textInputEt.addTextChangedListener(countryCodeTextWatcher);
+            binding.textInputEt.addTextChangedListener(new CountryCodeTextWatcher());
         } else if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD) {
             binding.textInputEt.setTransformationMethod(new PasswordTransformationMethod());
+            binding.textInputEt.addTextChangedListener(new DefaultTextWatcher());
+        }
+        else
+        {
+            binding.textInputEt.addTextChangedListener(new DefaultTextWatcher());
         }
 
         binding.togglePasswordVisibilityBtn.setVisibility(inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD ?
@@ -126,23 +132,20 @@ public class TextInputView extends FrameLayout implements TextView.OnEditorActio
         super.onAttachedToWindow();
         // call getParent() here
     }
-    private TextWatcher countryCodeTextWatcher = new TextWatcher() {
-
+    private  class CountryCodeTextWatcher extends DefaultTextWatcher {
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // TODO Auto-generated method stub
-            if (showingError) hideError();
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            super.beforeTextChanged(s, start, count, after);
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-            // TODO Auto-generated method stub
-
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            super.onTextChanged(s, start, before, count);
         }
 
         @Override
         public void afterTextChanged(Editable s) {
+            super.afterTextChanged(s);
             if (!s.toString().startsWith(countryCode)) {
                 binding.textInputEt.setText(countryCode);
                 Selection.setSelection(binding.textInputEt.getText(), binding.textInputEt.getText().length());
@@ -151,22 +154,44 @@ public class TextInputView extends FrameLayout implements TextView.OnEditorActio
                 binding.textInputEt.setText(s.toString().substring(0, s.length() - 1));
                 Selection.setSelection(binding.textInputEt.getText(), binding.textInputEt.getText().length());
             }
+        }
+    }
+
+
+
+    private  class DefaultTextWatcher implements TextWatcher
+    {
+
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
         }
-    };
 
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (showingError) hideError();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+
+    }
     public void setError(String error) {
         showingError = true;
         binding.errorTv.setText(error);
         binding.errorTv.setVisibility(VISIBLE);
         binding.textInputEt.requestFocus();
         binding.textInputEt.setTextColor(ContextCompat.getColor(getContext(), R.color.colorErrorRed));
+
     }
 
     public void hideError() {
         showingError = false;
         binding.errorTv.setVisibility(GONE);
-        binding.textInputEt.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTxtBlack));
+        binding.textInputEt.setTextColor(txtColor);
 
     }
 

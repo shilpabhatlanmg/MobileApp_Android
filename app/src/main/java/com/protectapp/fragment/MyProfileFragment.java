@@ -85,7 +85,7 @@ public class MyProfileFragment extends BaseFragment implements View.OnClickListe
     {
         case UPDATE_PROFILE_RQ:
             ProtectApiHelper.getInstance().updateUserProfile(AppSession.getInstance().getAccessToken(),
-                    binding.nameInputView.getValue(),
+                    binding.nameInputView.getValue(),binding.emailInputView.getValue(),
                     AppCommons.toBase64(getContext(),selectedImageUri),new ApiCallback<ProfileData>(UPDATE_PROFILE_RQ));
             break;
     }
@@ -125,6 +125,12 @@ public class MyProfileFragment extends BaseFragment implements View.OnClickListe
         if(binding.nameInputView.getValue().isEmpty())
         {
             binding.nameInputView.setError(getString(R.string.error_name_input));
+            valid=false;
+        }
+        else
+        if(binding.emailInputView.getValue().isEmpty())
+        {
+            binding.emailInputView.setError(getString(R.string.error_email_input));
             valid=false;
         }
         return valid;

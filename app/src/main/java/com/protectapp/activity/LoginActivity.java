@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public <D> void onApiFail(GenericResponseModel<D> model, int req_code) {
         hideProgress();
-        AppCommons.showError(this,model != null ? model.getMessage() : null);
+        binding.passwordInput.setError(model != null && model.getMessage()!=null ? model.getMessage() : getString(R.string.something_went_wrong));
     }
 
     @Override
@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             this.binding.phoneInput.setError(getString(R.string.error_mobile_input));
         } else if (this.binding.passwordInput.getValue().length() == 0) {
             valid = false;
-            this.binding.phoneInput.setError(getString(R.string.error_password_input));
+            this.binding.passwordInput.setError(getString(R.string.error_password_input));
         }
         return valid;
     }
@@ -119,8 +119,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void doLogin() {
         if (validate())
+        {
             showProgress(false);
-        hitAPI(LOGIN_API_REQ);
+            hitAPI(LOGIN_API_REQ);
+        }
     }
 
 }

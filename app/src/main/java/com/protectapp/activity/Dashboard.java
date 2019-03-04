@@ -31,6 +31,7 @@ import com.protectapp.model.BeaconEvent;
 import com.protectapp.model.GenericNotificationData;
 import com.protectapp.model.GenericResponseModel;
 import com.protectapp.model.GetBadgeCountData;
+import com.protectapp.model.GetLocationData;
 import com.protectapp.model.Incident;
 import com.protectapp.model.ProfileData;
 import com.protectapp.model.UUIDData;
@@ -47,6 +48,7 @@ import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.greenrobot.eventbus.EventBus;
@@ -75,14 +77,16 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
     private Incident extraIncident = null;
     private boolean incidentReminder=false;
     private int noBeaconCounter = 0;
+    private GetLocationData currentLocation=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppCommons.setBluetooth(true);
         AppSession.getInstance().updateFCMToken(getApplicationContext());
         handleIntent();
     }
+
 
     private void handleIntent() {
         if (extraIncident != null)
@@ -127,7 +131,7 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
         binding.drawerMenu.setDrawerMenuListener(this);
         binding.dashboardToolbar.setOnActionItemClickListener(this);
         binding.dashboardToolbar.adjustToolbarFor(HomeFragment.class);
-        openFragment(HomeFragment.class);
+        openFragment(HomeFragment.class,getHomeFragBundle());
         setUpDashboardControls();
         hitAPI(GET_UUID_RQ);
     }
@@ -192,10 +196,15 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
                     UUID = ((UUIDData) model.getData()).getUUID();
                     startBeaconRanging();
                 }
+                else
+                {
+                    hitAPI(GET_UUID_RQ);
+                }
                 break;
             case REPORT_INCIDENT_RQ:
                 hideProgress();
-                AppAlertDialogHelper.showMessage(this, R.string.reported_success_title, R.string.reported_success_msg);
+                if (currentLocation!=null)
+                AppAlertDialogHelper.showMessage(this, getString(R.string.reported_success_title), getString(R.string.reported_success_msg,currentLocation.getLocationName(),currentLocation.getPremise()));
                 break;
             case GET_BADGE_COUNT_RQ:
                 if (model.getData() instanceof GetBadgeCountData) {
@@ -219,6 +228,9 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
     @Override
     public <D> void onApiFail(GenericResponseModel<D> model, int req_code) {
         switch (req_code) {
+            case GET_UUID_RQ:
+                hitAPI(GET_UUID_RQ);
+                break;
             case GET_PROFILE_RQ:
                 break;
             case REPORT_INCIDENT_RQ:
@@ -243,10 +255,10 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
                 binding.dashboardDrawer.openDrawer(Gravity.START);
                 break;
             case R.id.chat_btn:
-                openFragment(RecentChatsFragment.class);
+                openFragment(RecentChatsFragment.class,null);
                 break;
             case R.id.calendar_btn:
-                openFragment(AidHistoryFragment.class);
+                openFragment(AidHistoryFragment.class,null);
                 break;
             case R.id.add_btn:
                 startActivityForResult(new Intent(this, SelectMemberActivity.class),Constants.ACTIVITY_RQ.SELECT_MEMBER);
@@ -267,19 +279,19 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
             case R.id.close_menu_btn:
                 break;
             case R.id.home_nav_btn:
-                openFragment(HomeFragment.class);
+                openFragment(HomeFragment.class,getHomeFragBundle());
                 break;
             case R.id.my_profile_nav_btn:
-                openFragment(MyProfileFragment.class);
+                openFragment(MyProfileFragment.class,null);
                 break;
             case R.id.change_password_nav_btn:
-                openFragment(ChangePasswordFragment.class);
+                openFragment(ChangePasswordFragment.class,null);
                 break;
             case R.id.about_us_nav_btn:
-                openFragment(AboutUsFragment.class);
+                openFragment(AboutUsFragment.class,null);
                 break;
             case R.id.privacy_policy_nav_btn:
-                openFragment(PrivacyPolicyFragment.class);
+                openFragment(PrivacyPolicyFragment.class,null);
                 break;
             case R.id.logout_nav_btn:
                 hitAPI(DO_LOGOUT_RQ);
@@ -287,6 +299,12 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
                 break;
 
         }
+    }
+
+    private Bundle getHomeFragBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.EXTRA.BEACON_EVENT,toBeaconEvent(trackedBeacon));
+        return bundle;
     }
 
 
@@ -302,7 +320,7 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
             binding.dashboardToolbar.adjustToolbarFor(currentFragment.getClass());
     }
 
-    private void openFragment(Class fragmentClass) {
+    private void openFragment(Class fragmentClass,Bundle bundle) {
         try {
             binding.dashboardToolbar.adjustToolbarFor(fragmentClass);
             FragmentManager fm = getSupportFragmentManager();
@@ -314,7 +332,16 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
                     FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(0);
                     fm.popBackStack(entry.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
-                ft.replace(R.id.container, (Fragment) fragmentClass.newInstance(), fragmentClass.getName());
+                Fragment fragment = null;
+                if(fragmentClass.equals(HomeFragment.class))
+                {
+                    fragment = HomeFragment.newInstance(bundle);
+                }
+                else
+                {
+                    fragment= (Fragment) fragmentClass.newInstance();
+                }
+                ft.replace(R.id.container,fragment , fragmentClass.getName());
                 ft.commit();
                 return;
             }
@@ -349,10 +376,10 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
             } else {
-                rangeBeacons();
+                bindBeaconManager();
             }
         } else {
-            rangeBeacons();
+            bindBeaconManager();
         }
 
     }
@@ -363,7 +390,7 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    rangeBeacons();
+                    bindBeaconManager();
                 } else {
                     startBeaconRanging();
                 }
@@ -380,53 +407,86 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
 
     }
 
-    private void rangeBeacons() {
+    private void bindBeaconManager() {
         if (beaconManager != null) beaconManager.unbind(this);
-
         beaconManager.bind(this);
-
     }
+    private void unbindBeaconManager() {
+        if (beaconManager != null) beaconManager.unbind(this);
+    }
+
 
     @Override
     public void onBeaconServiceConnect() {
         if (UUID == null) return;
 
-        try {
-            beaconManager.setForegroundScanPeriod(Constants.BEACON_SCAN_INTERVAL);
-            beaconManager.updateScanPeriods();
-        } catch (Exception e) {
+//        try {
+//            beaconManager.setForegroundScanPeriod(Constants.BEACON_SCAN_INTERVAL);
+//            beaconManager.updateScanPeriods();
+//        } catch (Exception e) {
+//
+//        }
+beaconManager.removeAllMonitorNotifiers();
+beaconManager.addMonitorNotifier(new MonitorNotifier() {
+    @Override
+    public void didEnterRegion(Region region) {
 
-        }
+
+    }
+
+    @Override
+    public void didExitRegion(Region region) {
+        trackedBeacon = null;
+        EventBus.getDefault().post(toBeaconEvent(null));
         beaconManager.removeAllRangeNotifiers();
-        beaconManager.addRangeNotifier(new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                if (beacons.size() > 0) {
-                    noBeaconCounter=0;
-                    Beacon beacon = selectValidBeacon((ArrayList<Beacon>) beacons);
+        stopBeaconRangingInRegion();
 
-                    if (trackedBeacon == null || !beacon.equals(trackedBeacon)) {
-                        trackedBeacon = beacon;
-                        BeaconEvent beaconEvent = new BeaconEvent();
-                        beaconEvent.setMajorID(beacon.getId2().toString());
-                        beaconEvent.setMinorID(beacon.getId3().toString());
-                        beaconEvent.setBeaconDistance(beacons.iterator().next().getDistance());
-                        EventBus.getDefault().post(beaconEvent);
-                    }
+    }
 
 
-                } else if (noBeaconCounter > 5) {
-                    trackedBeacon = null;
-                    BeaconEvent beaconEvent = new BeaconEvent();
-                    beaconEvent.setMajorID(null);
-                    beaconEvent.setMinorID(null);
-                    EventBus.getDefault().post(beaconEvent);
-                } else {
-                    noBeaconCounter++;
+    @Override
+    public void didDetermineStateForRegion(int i, Region region) {
+        beaconManager.removeAllRangeNotifiers();
+        beaconManager.addRangeNotifier(beaconRangeNotifier);
+        startBeaconRangingInRegion();
+    }
+});
+        startBeaconMonitoringInRegion();
+    }
+
+
+    private RangeNotifier beaconRangeNotifier=new RangeNotifier() {
+        @Override
+        public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+            if (beacons.size() > 0) {
+                noBeaconCounter=0;
+                Beacon beacon = selectValidBeacon((ArrayList<Beacon>) beacons);
+
+                if (trackedBeacon == null || !beacon.equals(trackedBeacon)) {
+                    trackedBeacon = beacon;
+                    EventBus.getDefault().post(toBeaconEvent(beacon));
                 }
-            }
-        });
 
+
+            } else if (noBeaconCounter > 10) {
+//                trackedBeacon = null;
+//                EventBus.getDefault().post(toBeaconEvent(null));
+            } else {
+                noBeaconCounter++;
+            }
+        }
+    };
+private void startBeaconMonitoringInRegion()
+{
+    try {
+        beaconManager.startMonitoringBeaconsInRegion(new Region("myRangingUniqueId", Identifier.parse(UUID), null, null));
+    } catch (RemoteException e) {
+        Log.d("Beacon", "beacon error");
+
+    }
+}
+    private void startBeaconRangingInRegion()
+    {
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", Identifier.parse(UUID), null, null));
         } catch (RemoteException e) {
@@ -434,13 +494,20 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
 
         }
     }
+    private void stopBeaconRangingInRegion()
+    {
+        try {
+            beaconManager.stopRangingBeaconsInRegion(new Region("myRangingUniqueId", Identifier.parse(UUID), null, null));
+        } catch (RemoteException e) {
+            Log.d("Beacon", "beacon error");
 
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (beaconManager != null)
             beaconManager.unbind(this);
-        AppCommons.setBluetooth(false);
     }
 
     @Override
@@ -456,13 +523,26 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
 
     @Override
     public void incidentListLoaded() {
+    if(AppSession.getInstance().getBadgeCountData()!=null)
+    {
         AppSession.getInstance().getBadgeCountData().setIncidentBadgeCount(0);
         binding.dashboardToolbar.updateBadges();
+    }
+
     }
 
     @Override
     public void onProfileUpdated() {
         binding.drawerMenu.updateHeader();
+    }
+
+    @Override
+    public void onLocationLoaded(GetLocationData location) {
+        if (location!=null)
+        {
+            this.currentLocation=location;
+        }
+
     }
 
     private Beacon selectValidBeacon(ArrayList<Beacon> beaconList) {
@@ -495,13 +575,17 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
     @Override
     protected void onStart() {
         super.onStart();
+        AppCommons.setBluetooth(true);
         EventBus.getDefault().register(this);
+        bindBeaconManager();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        AppCommons.setBluetooth(false);
         EventBus.getDefault().unregister(this);
+        unbindBeaconManager();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -526,6 +610,25 @@ public class Dashboard extends BaseActivity implements View.OnClickListener, Dra
             }
         }
     }
+private BeaconEvent  toBeaconEvent(Beacon beacon)
+{
+    BeaconEvent beaconEvent = new BeaconEvent();
+
+    if(beacon==null)
+    {
+        beaconEvent.setMajorID(null);
+        beaconEvent.setMinorID(null);
+    }
+    else
+    {
+        beaconEvent.setMajorID(beacon.getId2().toString());
+        beaconEvent.setMinorID(beacon.getId3().toString());
+        beaconEvent.setBeaconDistance(beacon.getDistance());
+    }
+
+    return beaconEvent;
+}
+
 }
 
 

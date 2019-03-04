@@ -36,6 +36,7 @@ public class AppToastBuilder {
         TextView text = layout.findViewById(R.id.text);
         text.setText(message);
         Toast toast = new Toast(context);
+        toast.setGravity(Gravity.CENTER,0,0);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         return toast;

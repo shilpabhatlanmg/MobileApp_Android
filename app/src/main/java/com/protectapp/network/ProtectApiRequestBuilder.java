@@ -123,12 +123,13 @@ public class ProtectApiRequestBuilder {
         }
         return request.toString();
     }
-    public static String getUpdateUserProfileRequest(String name,String profileImage) {
+    public static String getUpdateUserProfileRequest(String name,String email,String profileImage) {
 
         JSONObject request = new JSONObject();
         try {
 
             request.put("name",name);
+           // request.put("emailAddress",email);
             request.put("profileImage",profileImage);
 
         } catch (JSONException e) {

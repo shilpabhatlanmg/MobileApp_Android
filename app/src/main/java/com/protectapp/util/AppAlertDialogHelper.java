@@ -12,6 +12,15 @@ public class AppAlertDialogHelper {
     {
 
     }
+    public static final void showMessage(Context context,String title,String message)
+    {
+        new AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                .setTitle(title)
+                .setMessage(message)
+                .setNeutralButton("OK",null)
+
+                .create().show();
+    }
     public static final void showMessage(Context context,int title,int message)
     {
         new AlertDialog.Builder(context, R.style.AlertDialogTheme)

@@ -25,6 +25,7 @@ public class Constants {
         String DID_SENT_MESSAGE="extra_did_sent_message";
         String INCIDENT="extra_incident";
         String REPORT_REMINDER="extra_report_incident";
+        String BEACON_EVENT ="extra_beacon_event";
     }
     public interface PREF
     {
@@ -77,7 +78,7 @@ public class Constants {
         int SELECT_MEMBER = 40001;
         int CHAT_UPDATE = 40002;
     }
-    public static final long BEACON_SCAN_INTERVAL=2*1000;
+    public static final long BEACON_SCAN_INTERVAL=3*1000;
     public static final int BEACON_DISTANCE_BUFFER=3;
     public static final String FIREBASE_CHAT_KEY="protect_chat";
     public static final int FIREBASE_CHAT_LIMIT=12;

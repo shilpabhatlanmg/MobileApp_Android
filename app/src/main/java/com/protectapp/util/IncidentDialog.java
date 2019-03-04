@@ -26,7 +26,7 @@ public class IncidentDialog {
         dialog.setContentView(view);
         binding = DataBindingUtil.bind(view);
         binding.incidentLocationTv.setText(incident.getLocation());
-        binding.incidentTimeTv.setText(AppCommons.getDisplayableTime(incident.getTimestamp()));
+        binding.incidentTimeTv.setText(AppCommons.toDisplayableDateTime(incident.getTimestamp()));
         binding.incidentImage.setImageResource(getImageResourceByType(incident.getType()));
         User reportedBy = incident.getInitiatedBy();
         boolean isReporterSecurity = reportedBy!=null && reportedBy.getName()!=null;

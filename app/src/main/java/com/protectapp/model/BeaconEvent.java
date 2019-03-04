@@ -1,6 +1,8 @@
 package com.protectapp.model;
 
-public  class BeaconEvent {
+import java.io.Serializable;
+
+public  class BeaconEvent implements Serializable {
     private String majorID;
     private String minorID;
     private double beaconDistance;

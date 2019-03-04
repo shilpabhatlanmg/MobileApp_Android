@@ -3,24 +3,19 @@ package com.protectapp.fragment;
 import android.animation.Animator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.protectapp.R;
 import com.protectapp.databinding.FragmentHomeBinding;
 import com.protectapp.listener.DashboardFragmentListener;
 import com.protectapp.model.BeaconEvent;
-import com.protectapp.model.Contact;
-import com.protectapp.model.GenericNotificationData;
 import com.protectapp.model.GenericResponseModel;
 import com.protectapp.model.GetLocationData;
 import com.protectapp.network.ProtectApiHelper;
@@ -42,12 +37,9 @@ public class HomeFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+    public static HomeFragment newInstance(Bundle bundle) {
+        HomeFragment fragment = new HomeFragment();;
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -55,8 +47,7 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+            beaconEvent = (BeaconEvent) getArguments().getSerializable(Constants.EXTRA.BEACON_EVENT);
         }
     }
 
@@ -80,7 +71,8 @@ public class HomeFragment extends BaseFragment {
         binding.fireAlarmBtn.setOnTouchListener(buttonTouchListener);
         binding.medicalAlarmBtn.setOnTouchListener(buttonTouchListener);
         binding.assistAlarmBtn.setOnTouchListener(buttonTouchListener);
-        setBeaconStatus(Constants.BEACON_STATUS.SEARCHING);
+        processBeaconEvent();
+        binding.appVersionTv.setText("v"+AppCommons.getVersionName(getContext()));
     }
 
     @Override
@@ -106,6 +98,11 @@ public class HomeFragment extends BaseFragment {
 
                     binding.currentLocationTv.setText(AppCommons.getLocationDisplayName((GetLocationData) model.getData()));
                     setBeaconStatus(Constants.BEACON_STATUS.UPDATED);
+                    mListener.onLocationLoaded((GetLocationData) model.getData());
+                }
+                else
+                {
+                   hitAPI(GET_LOCATION_RQ);
                 }
                 break;
         }
@@ -115,7 +112,9 @@ public class HomeFragment extends BaseFragment {
     public <D> void onApiFail(GenericResponseModel<D> model, int req_code) {
         switch (req_code)
         {
-            case GET_LOCATION_RQ:setBeaconStatus(Constants.BEACON_STATUS.SEARCHING);break;
+            case GET_LOCATION_RQ:
+                 hitAPI(GET_LOCATION_RQ);
+            break;
         }
     }
 
@@ -194,7 +193,13 @@ public class HomeFragment extends BaseFragment {
     public void onBeaconEvent(BeaconEvent event) {
 
         beaconEvent=event;
-        if (event.getMajorID()!=null)
+        processBeaconEvent();
+
+         }
+
+    private void processBeaconEvent() {
+
+        if (beaconEvent!=null && beaconEvent.getMajorID()!=null)
         {
             //Beacon found, Updating
             setBeaconStatus(Constants.BEACON_STATUS.UPDATING);
@@ -206,10 +211,7 @@ public class HomeFragment extends BaseFragment {
             setBeaconStatus(Constants.BEACON_STATUS.SEARCHING);
 
         }
-
-
-
-         }
+    }
 
     private void setBeaconStatus(int beaconStatus)
     {
@@ -218,10 +220,13 @@ public class HomeFragment extends BaseFragment {
         {
             case Constants.BEACON_STATUS.SEARCHING:
                 binding.currentLocationTv.setText(getString(R.string.beacon_status_searching));
+                binding.currentLocationTv.clearAnimation();
                 binding.currentLocationTv.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.blinking));
                 break;
             case Constants.BEACON_STATUS.UPDATING:
                 binding.currentLocationTv.setText(getString(R.string.beacon_status_updating));
+                binding.currentLocationTv.clearAnimation();
+                binding.currentLocationTv.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.blinking));
 
                 break;
             case Constants.BEACON_STATUS.UPDATED:
