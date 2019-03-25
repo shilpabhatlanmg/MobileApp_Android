@@ -26,6 +26,7 @@ public class Constants {
         String INCIDENT="extra_incident";
         String REPORT_REMINDER="extra_report_incident";
         String BEACON_EVENT ="extra_beacon_event";
+        String UUID ="extra_uuid";
     }
     public interface PREF
     {
@@ -43,6 +44,7 @@ public class Constants {
     public interface API
     {
         int SUCCESS=200;
+        int TOKEN_EXPIRE=401;
 
     }
     public interface INCIDENT
@@ -81,6 +83,9 @@ public class Constants {
     public static final long BEACON_SCAN_INTERVAL=3*1000;
     public static final int BEACON_DISTANCE_BUFFER=3;
     public static final String FIREBASE_CHAT_KEY="protect_chat";
+    public static final String APP_BEACON_LAYOUT="m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
+    public static final String FOREGROUND_BEACON_RANGE_ID="don.protect.app.foreground";
+    public static final String BACKGROUND_BEACON_RANGE_ID="don.protect.app.background";
     public static final int FIREBASE_CHAT_LIMIT=12;
 
 

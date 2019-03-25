@@ -233,7 +233,7 @@ public class ProtectApiHelper {
 
         if(protectApi!=null)
         {
-            Call<GenericResponseModel<Object>> call =  protectApi.changePassword(token,
+            Call<GenericResponseModel<Object>> call =  protectApi.recordResponse(token,
                     getRequestBody(ProtectApiRequestBuilder.getRecordResponseRequest(incidentID)));
             call.enqueue(responseCallback!=null ? responseCallback : new EmptyCallback<GenericResponseModel<Object>>());
 

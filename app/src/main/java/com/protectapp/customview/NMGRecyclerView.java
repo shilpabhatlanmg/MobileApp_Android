@@ -66,7 +66,7 @@ public class NMGRecyclerView extends RecyclerView {
 
 
     private void init() {
-        setLayoutAnimation(AnimationUtils.loadLayoutAnimation(getContext(), R.anim.recycler_layout_animation));
+        //setLayoutAnimation(AnimationUtils.loadLayoutAnimation(getContext(), R.anim.recycler_layout_animation));
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

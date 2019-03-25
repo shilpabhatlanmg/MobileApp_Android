@@ -20,6 +20,7 @@ import com.protectapp.model.GenericResponseModel;
 import com.protectapp.model.GetLocationData;
 import com.protectapp.network.ProtectApiHelper;
 import com.protectapp.util.AnimationListener;
+import com.protectapp.util.AppBeaconService;
 import com.protectapp.util.AppCommons;
 import com.protectapp.util.AppSession;
 import com.protectapp.util.Constants;
@@ -47,7 +48,16 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            beaconEvent = (BeaconEvent) getArguments().getSerializable(Constants.EXTRA.BEACON_EVENT);
+//            beaconEvent = (BeaconEvent) getArguments().getSerializable(Constants.EXTRA.BEACON_EVENT);
+            if(AppBeaconService.getInstance()!=null)
+            {
+                beaconEvent = AppBeaconService.getInstance().getTrackedBeaconEvent();
+            }
+            else
+            {
+                beaconEvent=null;
+            }
+
         }
     }
 
@@ -98,6 +108,7 @@ public class HomeFragment extends BaseFragment {
 
                     binding.currentLocationTv.setText(AppCommons.getLocationDisplayName((GetLocationData) model.getData()));
                     setBeaconStatus(Constants.BEACON_STATUS.UPDATED);
+                    if(mListener!=null)
                     mListener.onLocationLoaded((GetLocationData) model.getData());
                 }
                 else
@@ -165,7 +176,7 @@ public class HomeFragment extends BaseFragment {
 
     private void  handleIncidentButtonClick(View view)
     {
-
+        if(mListener!=null)
         mListener.reportIncident(getIncidentType(view.getId()));
 
     }

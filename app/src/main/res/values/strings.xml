@@ -79,4 +79,6 @@
     <string name="password_changed_success">Password changed successfully</string>
     <string name="record_response_incident_msg">Do you want to record your response to this incident report?</string>
     <string name="response_recorded_success_msg">Your response has been recorded successfully</string>
+    <string name="beacon_service_notification_msg_default">"Location Service Connected"</string>
+
 </resources>

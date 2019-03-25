@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 
 import com.protectapp.R;
 import com.protectapp.model.GenericResponseModel;
+import com.protectapp.util.AppSession;
 import com.protectapp.util.Constants;
 import com.protectapp.util.NavigationEventHandler;
 import com.protectapp.util.NavigationEventHandlerImpl;
@@ -119,6 +120,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onApiSuccess(response.body(), reqCode);
                 else
                 onApiFail(response.body(), reqCode);
+            }
+            else
+            if(response.code() == Constants.API.TOKEN_EXPIRE)
+            {
+                AppSession.getInstance().logout();
+                getNavigation().afterLogout(BaseActivity.this, new Bundle());
             }
             else
             {

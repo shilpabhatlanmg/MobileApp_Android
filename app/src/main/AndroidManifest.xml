@@ -10,21 +10,23 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
 
         android:name=".ProtectApplication"
         android:allowBackup="false"
         android:fullBackupContent="false"
-        tools:replace="android:allowBackup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -32,36 +34,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MobileVerificationActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".activity.MobileVerificationActivity"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.EnterOTPActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.EnterOTPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.Dashboard"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.CreatePasswordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.SelectMemberActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.ChatActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.SelectMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChatActivity"
             android:parentActivityName=".activity.Dashboard"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
+
         <service android:name=".network.AppFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -75,7 +82,15 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
-
+        <receiver android:name=".util.BeaconServiceStarter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".util.AppBeaconService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
     </application>
 
 </manifest>

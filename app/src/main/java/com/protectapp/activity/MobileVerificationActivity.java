@@ -69,7 +69,7 @@ public class MobileVerificationActivity extends BaseActivity implements View.OnC
                             ((RequestOTPData) model.getData()).getValidity();
                     bundle.putInt(Constants.EXTRA.OTP_VALIDITY, Integer.valueOf(validity));
                     getNavigation().afterGetOtpClick(this, bundle);
-
+                    finish();
                 }
                 break;
         }

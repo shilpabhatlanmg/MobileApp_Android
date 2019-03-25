@@ -14,7 +14,7 @@ import com.protectapp.util.AppSession;
 
 import java.io.File;
 
-public class ProtectApplication extends Application {
+public class ProtectApplication extends Application{
 private static final int MAX_SIZE= 25 * 1024 * 1024;
     @Override
     public void onCreate() {

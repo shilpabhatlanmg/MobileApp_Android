@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import com.protectapp.R;
 import com.protectapp.activity.BaseActivity;
 import com.protectapp.model.GenericResponseModel;
+import com.protectapp.util.AppSession;
 import com.protectapp.util.Constants;
 
 import retrofit2.Call;
@@ -60,6 +61,16 @@ public abstract class BaseFragment extends Fragment {
                     onApiSuccess(response.body(), reqCode);
                 else
                     onApiFail(response.body(), reqCode);
+            }
+            else
+            if(response.code() == Constants.API.TOKEN_EXPIRE)
+            {
+
+                if(getActivity() instanceof BaseActivity)
+                {
+                    AppSession.getInstance().logout();
+                    ((BaseActivity) getActivity()).getNavigation().afterLogout(getActivity(), new Bundle());
+                }
             }
             else
             {

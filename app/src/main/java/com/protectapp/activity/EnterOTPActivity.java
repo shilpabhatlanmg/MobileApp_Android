@@ -175,5 +175,6 @@ public class EnterOTPActivity extends BaseActivity implements View.OnClickListen
         bundle.putString(Constants.EXTRA.ACCESS_TOKEN, data.getAccessToken());
         bundle.putBoolean(Constants.EXTRA.FROM_FORGOT_PASSWORD, fromForgotPassword);
         getNavigation().afterOTPVerification(this, bundle);
+        finish();
     }
 }

@@ -29,6 +29,11 @@ public class NotificationIntentFactory {
         {
             return  getReportNotificationIntent(context, (GenericNotificationData<Incident>) new Gson().fromJson(notificationDataJson,new TypeToken<GenericNotificationData<Incident>>(){}.getType()));
         }
+        else
+        if (notificationData.getNotificationType().equals(Constants.NOTIFICATION_TYPE.REPORT_REMINDER))
+        {
+            return  getReportReminderNotificationIntent(context, (GenericNotificationData<Incident>) new Gson().fromJson(notificationDataJson,new TypeToken<GenericNotificationData<Incident>>(){}.getType()));
+        }
         }
         catch (Exception e)
         {
@@ -70,5 +75,11 @@ public class NotificationIntentFactory {
         }
 
         return null;
+    }
+    public static final Intent getDefaultIntent(Context context) {
+
+            Intent notificationIntent = new Intent(context,Dashboard.class);
+            return  notificationIntent;
+
     }
 }

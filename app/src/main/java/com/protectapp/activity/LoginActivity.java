@@ -75,6 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     bundle.putSerializable(Constants.EXTRA.PROFILE_DATA,(ProfileData) model.getData());
                     bundle.putBoolean(Constants.EXTRA.CREATE_PASSWORD,((ProfileData) model.getData()).isShouldCreatePassword());
                     getNavigation().afterLogin(this,bundle);
+                    finish();
                 }
                 break;
         }

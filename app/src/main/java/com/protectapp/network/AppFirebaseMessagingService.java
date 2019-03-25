@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioAttributes;
@@ -121,8 +122,9 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         if(notificationData.getPayload() instanceof Incident)
         {
             Incident incident = (Incident)notificationData.getPayload();
+            Intent reportReminderIntent = NotificationIntentFactory.getReportReminderNotificationIntent(this,notificationData);
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                    NotificationIntentFactory.getReportNotificationIntent(this,notificationData), PendingIntent.FLAG_UPDATE_CURRENT);
+                    reportReminderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             showNotification(title,message,contentIntent,incident.getReportID());
         }
     }

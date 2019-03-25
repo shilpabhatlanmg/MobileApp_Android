@@ -24,9 +24,12 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.protectapp.R;
+import com.protectapp.model.BeaconEvent;
 import com.protectapp.model.GetLocationData;
 import com.protectapp.model.Incident;
 import com.protectapp.model.SpanData;
+
+import org.altbeacon.beacon.Beacon;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -497,5 +500,20 @@ public static final String generateConfirmReportMsg(Context context,int incident
             e.printStackTrace();
             return "Unknown-01";
         }
+    }
+
+    public static final BeaconEvent toBeaconEvent(Beacon beacon) {
+        BeaconEvent beaconEvent = new BeaconEvent();
+
+        if (beacon == null) {
+            beaconEvent.setMajorID(null);
+            beaconEvent.setMinorID(null);
+        } else {
+            beaconEvent.setMajorID(beacon.getId2().toString());
+            beaconEvent.setMinorID(beacon.getId3().toString());
+            beaconEvent.setBeaconDistance(beacon.getDistance());
+        }
+
+        return beaconEvent;
     }
 }
